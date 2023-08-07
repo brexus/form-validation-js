@@ -10,13 +10,46 @@ const inputConfirmPasswordName = document.getElementById("confirm-password");
 
 const submit = document.getElementById("submit");
 
+const firstNameRegExp = /^[a-zA-Z]*$/;
 const emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const zipCodeRegExp = /^[0-9][0-9]-[0-9][0-9][0-9]$/;
 
-let isValid = false;
+// Minimum osiem znaków, co najmniej jedna litera i jedna cyfra:
+const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+
+
+const isValidFirstName = () => 
+    (inputFirstName.value.trim().length > 0) && (firstNameRegExp.test(inputFirstName.value));
+
+
+const isValidLastName = () => 
+    (inputFirstName.value.trim().length > 0) && (firstNameRegExp.test(inputFirstName.value));
+
+const isValidEmail = () => 
+    (inputEmailName.value.trim().length > 0) && (emailRegExp.test(inputEmailName.value))
+
+
+const isValidCountry = () => 
+    inputCountryName.value.trim().length > 0;
+
+
+const isValidZipCode = () => 
+    (inputZipCodeName.value.trim().length > 0) && (zipCodeRegExp.test(inputZipCodeName.value));
+
+
+const isValidPassword = () => 
+    (inputPasswordName.value.trim().length > 0) && (passwordRegExp.test(inputPasswordName.value));
+
+
+const isValidConfirmPassword = () => 
+    isValidPassword() && (inputPasswordName.value === inputConfirmPasswordName.value);
 
 
 inputFirstName.addEventListener("input", () => {
-    if( !inputFirstName.value.trim().length > 0 ) {
+    let isValid = isValidFirstName();
+
+    if( !isValid ) {
         inputFirstName.className = "invalid";
     } else {
         inputFirstName.className = "valid";
@@ -24,7 +57,9 @@ inputFirstName.addEventListener("input", () => {
 });
 
 inputLastName.addEventListener("input", () => {
-    if( !inputLastName.value.trim().length > 0 ) {
+    let isValid = isValidFirstName();
+
+    if( !isValid ) {
         inputLastName.className = "invalid";
     } else {
         inputLastName.className = "valid";
@@ -32,7 +67,9 @@ inputLastName.addEventListener("input", () => {
 });
 
 inputEmailName.addEventListener("input", () => {
-    if( !(inputEmailName.value.trim().length > 0) || !(emailRegExp.test(inputEmailName.value)) ) {
+    let isValid = isValidEmail();
+
+    if( !isValid ) {
         inputEmailName.className = "invalid";
     } else {
         inputEmailName.className = "valid";
@@ -40,7 +77,9 @@ inputEmailName.addEventListener("input", () => {
 });
 
 inputCountryName.addEventListener("input", () => {
-    if( !inputCountryName.value.trim().length > 0 ) {
+    let isValid = isValidCountry();
+
+    if( !isValid ) {
         inputCountryName.className = "invalid";
     } else {
         inputCountryName.className = "valid";
@@ -48,7 +87,9 @@ inputCountryName.addEventListener("input", () => {
 });
 
 inputZipCodeName.addEventListener("input", () => {
-    if( !inputZipCodeName.value.trim().length > 0 ) {
+    let isValid = isValidZipCode();
+
+    if( !isValid ) {
         inputZipCodeName.className = "invalid";
     } else {
         inputZipCodeName.className = "valid";
@@ -56,7 +97,9 @@ inputZipCodeName.addEventListener("input", () => {
 });
 
 inputPasswordName.addEventListener("input", () => {
-    if( !inputPasswordName.value.trim().length > 0 ) {
+    let isValid = isValidPassword();
+
+    if( !isValid ) {
         inputPasswordName.className = "invalid";
     } else {
         inputPasswordName.className = "valid";
@@ -64,7 +107,9 @@ inputPasswordName.addEventListener("input", () => {
 });
 
 inputConfirmPasswordName.addEventListener("input", () => {
-    if( !inputConfirmPasswordName.value.trim().length > 0 ) {
+    let isValid = isValidConfirmPassword();
+
+    if( !isValid ) {
         inputConfirmPasswordName.className = "invalid";
     } else {
         inputConfirmPasswordName.className = "valid";
@@ -73,6 +118,16 @@ inputConfirmPasswordName.addEventListener("input", () => {
 
 
 
-submit.addEventListener('click', () => {
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
 
+    let isValid = () => isValidFirstName() && 
+                        isValidLastName() && 
+                        isValidEmail() &&
+                        isValidCountry() &&
+                        isValidZipCode() &&
+                        isValidPassword() &&
+                        isValidConfirmPassword();
+
+    (isValid()) ? alert("brawo ty") : alert("zjeb");
 });
