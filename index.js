@@ -24,7 +24,7 @@ const isValidFirstName = () =>
 
 
 const isValidLastName = () => 
-    (inputFirstName.value.trim().length > 0) && (firstNameRegExp.test(inputFirstName.value));
+    (inputLastName.value.trim().length > 0) && (firstNameRegExp.test(inputLastName.value));
 
 const isValidEmail = () => 
     (inputEmailName.value.trim().length > 0) && (emailRegExp.test(inputEmailName.value))
@@ -48,75 +48,102 @@ const isValidConfirmPassword = () =>
 
 inputFirstName.addEventListener("input", () => {
     let isValid = isValidFirstName();
+    const error = document.querySelector(".error-first-name");
 
     if( !isValid ) {
         inputFirstName.className = "invalid";
+        showError(error);
     } else {
         inputFirstName.className = "valid";
+        removeError(error);
     }
 });
 
 inputLastName.addEventListener("input", () => {
     let isValid = isValidFirstName();
+    const error = document.querySelector(".error-last-name");
 
-    if( !isValid ) {
+    if( !isValidLastName() ) {
         inputLastName.className = "invalid";
+        showError(error);
     } else {
         inputLastName.className = "valid";
+        removeError(error);
     }
 });
 
 inputEmailName.addEventListener("input", () => {
     let isValid = isValidEmail();
+    const error = document.querySelector(".error-email");
 
     if( !isValid ) {
         inputEmailName.className = "invalid";
+        showError(error);
     } else {
         inputEmailName.className = "valid";
+        removeError(error);
     }
 });
 
 inputCountryName.addEventListener("input", () => {
     let isValid = isValidCountry();
+    const error = document.querySelector(".error-country");
 
     if( !isValid ) {
         inputCountryName.className = "invalid";
+        showError(error);
     } else {
         inputCountryName.className = "valid";
+        removeError(error);
     }
 });
 
 inputZipCodeName.addEventListener("input", () => {
     let isValid = isValidZipCode();
-
+    const error = document.querySelector(".error-zip-code");
+    
     if( !isValid ) {
         inputZipCodeName.className = "invalid";
+        showError(error);
     } else {
         inputZipCodeName.className = "valid";
+        removeError(error);
     }
 });
 
 inputPasswordName.addEventListener("input", () => {
     let isValid = isValidPassword();
+    const error = document.querySelector(".error-password");
 
     if( !isValid ) {
         inputPasswordName.className = "invalid";
+        showError(error);
     } else {
         inputPasswordName.className = "valid";
+        removeError(error);
     }
 });
 
 inputConfirmPasswordName.addEventListener("input", () => {
     let isValid = isValidConfirmPassword();
+    const error = document.querySelector(".error-confirm-password");
 
     if( !isValid ) {
         inputConfirmPasswordName.className = "invalid";
+        showError(error);
     } else {
         inputConfirmPasswordName.className = "valid";
+        removeError(error);
     }
 });
 
+const showError = (error) => {
+    error.innerText = "Invalid value!";
+};
 
+const removeError = (error) => {
+    error.innerText = "";
+};
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -129,5 +156,5 @@ form.addEventListener('submit', (e) => {
                         isValidPassword() &&
                         isValidConfirmPassword();
 
-    (isValid()) ? alert("brawo ty") : alert("zjeb");
+    (isValid()) ? alert("Correct validation :)") : alert("Invalid validation :(");
 });
